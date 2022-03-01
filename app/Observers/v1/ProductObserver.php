@@ -6,15 +6,22 @@ use App\Models\v1\Product;
 
 class ProductObserver
 {
+    protected $userID;
+
+    public function __construct()
+    {
+        $this->userID = auth()->user()->id;
+    }
+
     /**
      * Handle the Product "created" event.
      *
      * @param  \App\Models\Product  $product
      * @return void
      */
-    public function created(Product $product)
+    public function creating(Product $product)
     {
-        //
+        $product->created_by = $this->userID;
     }
 
     /**
@@ -23,9 +30,9 @@ class ProductObserver
      * @param  \App\Models\Product  $product
      * @return void
      */
-    public function updated(Product $product)
+    public function updating(Product $product)
     {
-        //
+        $product->updated_by = $this->userID;
     }
 
     /**
@@ -36,7 +43,8 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        //
+        $product->deleted_by = $this->userID;
+        $product->update();
     }
 
     /**
