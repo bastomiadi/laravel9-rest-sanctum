@@ -27,7 +27,6 @@ class ProductResource extends JsonResource
             'created_by' => (new UserResource($this->whenLoaded('user'))),
             'href' => [
                 'link' => route('products.show',$this->id),
-                //'reviews' => route('reviews.index',$this->id)
             ]
         ];
     }

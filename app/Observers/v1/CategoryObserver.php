@@ -3,7 +3,6 @@
 namespace App\Observers\v1;
 
 use App\Models\v1\Category;
-use Carbon\Carbon;
 
 class CategoryObserver
 {
@@ -34,7 +33,6 @@ class CategoryObserver
     public function updating(Category $category)
     {
         $category->updated_by = $this->userID;
-        $category->updated_at = Carbon::now()->format('Y-m-d H:i:s');
     }
 
     /**
@@ -45,7 +43,8 @@ class CategoryObserver
      */
     public function deleted(Category $category)
     {
-        //
+        $category->deleted_by = $this->userID;
+        $category->update();
     }
 
     /**
