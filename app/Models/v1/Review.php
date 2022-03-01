@@ -2,6 +2,7 @@
 
 namespace App\Models\v1;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,6 +22,11 @@ class Review extends Model
 
     public function product()
     {
-    	return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 }

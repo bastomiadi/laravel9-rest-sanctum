@@ -15,9 +15,12 @@ class ReviewResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'customer' => $this->customer,
+            'id' => $this->id,
+            'product' => (new ProductResource($this->whenLoaded('product'))),
+            'review' => $this->review,            
             'body' => $this->review,
             'star' => $this->star,
+            'created_by' => (new UserResource($this->whenLoaded('user'))),
        ];
     }
 }

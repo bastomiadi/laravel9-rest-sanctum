@@ -7,15 +7,22 @@ use App\Models\v1\ReviewModel;
 
 class ReviewObserver
 {
+    protected $userID;
+
+    public function __construct()
+    {
+        $this->userID = auth()->user()->id;
+    }
+
     /**
      * Handle the Review "created" event.
      *
      * @param  \App\Models\Review  $review
      * @return void
      */
-    public function created(Review $review)
+    public function creating(Review $review)
     {
-        //
+        $review->created_by = $this->userID;
     }
 
     /**
@@ -24,9 +31,9 @@ class ReviewObserver
      * @param  \App\Models\Review  $review
      * @return void
      */
-    public function updated(Review $review)
+    public function updating(Review $review)
     {
-        //
+        $review->updated_by = $this->userID;
     }
 
     /**
@@ -37,7 +44,8 @@ class ReviewObserver
      */
     public function deleted(Review $review)
     {
-        //
+        $review->deleted_by = $this->userID;
+        $review->update();
     }
 
     /**

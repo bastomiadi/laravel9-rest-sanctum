@@ -24,9 +24,9 @@ class ReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            'created_by' => 'required',
-            'star' => 'required|integer|between:0,5',
-            'review' => 'required'
+            'product_id' => 'required|integer|exists:products,id',
+            'review' => 'required',
+            'star' => 'required|integer|between:0,5'
         ];
     }
 }
