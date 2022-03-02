@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Requests\v1\CategoryRequest;
 use App\Http\Resources\v1\CategoryResource;
 use App\Models\v1\Category;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,9 +16,12 @@ class CategoryController extends BaseController
         $this->middleware('auth:sanctum')->except('index','show');
     }
 
-    public function index(Category $category)
+    public function index(Category $category, Request $request)
     {   
-        return CategoryResource::collection($category->with(['products','user'])->paginate(50));
+
+        //if($request->query()){}
+        return CategoryResource::collection($category->with(['products','user'])
+        ->paginate(50));
     }
 
     public function store(CategoryRequest $request)
