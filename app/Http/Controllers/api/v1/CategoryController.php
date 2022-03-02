@@ -24,14 +24,14 @@ class CategoryController extends BaseController
         ->paginate(50));
     }
 
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request, Category $category)
     {
-        $model = Category::create(
-            $request->all()
-        );    
-
         return response([
-            'data' => new CategoryResource($model)
+            'data' => new CategoryResource(
+                $category::create(
+                    $request->all()
+                )
+            )
         ],Response::HTTP_CREATED);
     }
 

@@ -20,14 +20,14 @@ class ReviewController extends BaseController
         return ReviewResource::collection($review->with(['product','user'])->paginate(10));
     }
 
-    public function store(ReviewRequest $request)
+    public function store(ReviewRequest $request, Review $review)
     {
-        $model = Review::create(
-            $request->all()
-        );    
-
         return response([
-            'data' => new ReviewResource($model)
+            'data' => new ReviewResource(
+                $review::create(
+                    $request->all()
+                )
+            )
         ],Response::HTTP_CREATED);
     }
 

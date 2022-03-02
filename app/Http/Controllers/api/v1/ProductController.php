@@ -20,14 +20,14 @@ class ProductController extends BaseController
         return ProductResource::collection($product->with(['category','user'])->paginate(10));
     }
 
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request, Product $product)
     {
-        $model = Product::create(
-            $request->all()
-        );    
-
         return response([
-            'data' => new ProductResource($model)
+            'data' => new ProductResource(
+                $product::create(
+                    $request->all()
+                )
+            )
         ],Response::HTTP_CREATED);
     }
 
