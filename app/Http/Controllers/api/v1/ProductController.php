@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Requests\v1\ProductRequest;
 use App\Http\Resources\v1\ProductResource;
 use App\Models\v1\Product;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,9 +16,14 @@ class ProductController extends BaseController
         $this->middleware('auth:sanctum')->except('index','show');
     }
 
-    public function index(Product $product)
+    public function index(Product $product, Request $request)
     {   
-        return ProductResource::collection($product->with(['category','user'])->paginate(10));
+        return ProductResource::collection(
+            $product
+            ->with(['category','user'])
+            ->filterByName($request->name)
+            ->paginate(10)
+        );
     }
 
     public function store(ProductRequest $request, Product $product)

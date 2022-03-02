@@ -20,6 +20,20 @@ class Category extends Model
         'category_name', 'detail'
     ];
 
+    public function scopeFilterByName($query, $name)
+    {
+        if ($name) {
+            return $query->where('category_name', 'like', '%'.$name.'%', 'or');
+        }
+    }
+
+    public function scopeFilterByDetail($query, $detail)
+    {
+        if ($detail) {
+            return $query->where('detail', 'like', '%'.$detail.'%', 'or');
+        }
+    }
+
     public function products()
     {
     	return $this->hasMany(Product::class);

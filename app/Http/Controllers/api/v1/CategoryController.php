@@ -17,11 +17,14 @@ class CategoryController extends BaseController
     }
 
     public function index(Category $category, Request $request)
-    {   
-
-        //if($request->query()){}
-        return CategoryResource::collection($category->with(['products','user'])
-        ->paginate(50));
+    {
+        return CategoryResource::collection(
+            $category
+            ->with(['products','user'])
+            ->filterByName($request->name)
+            ->filterByDetail($request->detail)
+            ->paginate(10)
+        );
     }
 
     public function store(CategoryRequest $request, Category $category)
