@@ -18,23 +18,37 @@ class SpatieSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions
-        Permission::create(['name' => 'edit articles']);
-        Permission::create(['name' => 'delete articles']);
-        Permission::create(['name' => 'publish articles']);
-        Permission::create(['name' => 'unpublish articles']);
+        // create permissions Category
+        Permission::create(['name' => 'edit category']);
+        Permission::create(['name' => 'delete category']);
+        Permission::create(['name' => 'update category']);
+        Permission::create(['name' => 'add category']);
+
+        // create permissions Product
+        Permission::create(['name' => 'edit product']);
+        Permission::create(['name' => 'delete product']);
+        Permission::create(['name' => 'update product']);
+        Permission::create(['name' => 'add product']);
+
+        // create permissions Review
+        Permission::create(['name' => 'edit review']);
+        Permission::create(['name' => 'delete review']);
+        Permission::create(['name' => 'update review']);
+        Permission::create(['name' => 'add review']);
 
         // create roles and assign created permissions
 
-        // this can be done as separate statements
-        $role = Role::create(['name' => 'writer']);
-        $role->givePermissionTo('edit articles');
-
         // or may be done by chaining
-        $role = Role::create(['name' => 'moderator'])
-            ->givePermissionTo(['publish articles', 'unpublish articles']);
+        $role = Role::create(['name' => 'user'])
+            ->givePermissionTo([
+                'add review', 
+                'edit review', 
+                'delete review', 
+                'update review'
+            ]);
 
-        $role = Role::create(['name' => 'super-admin']);
+        $role = Role::create(['name' => 'superadmin']);
         $role->givePermissionTo(Permission::all());
+
     }
 }

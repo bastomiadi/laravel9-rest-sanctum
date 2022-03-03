@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $this->call([
+            SpatieSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,
             ReviewSeeder::class,
-            SpatieSeeder::class,
         ]);
     }
 }

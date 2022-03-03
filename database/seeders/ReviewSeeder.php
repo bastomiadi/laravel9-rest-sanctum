@@ -15,8 +15,11 @@ class ReviewSeeder extends Seeder
      */
     public function run()
     {
-        Review::factory()
-        ->count(500)
-        ->create();
+        Review::withoutEvents(function ()  {        
+            // normally
+            Review::factory()
+            ->count(1000)
+            ->create();
+        });
     }
 }

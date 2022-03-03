@@ -15,8 +15,11 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::factory()
-        ->count(500)
-        ->create();
+        Product::withoutEvents(function ()  {        
+            // normally
+            Product::factory()
+            ->count(2000)
+            ->create();
+        });
     }
 }
