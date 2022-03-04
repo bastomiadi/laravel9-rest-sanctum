@@ -16,14 +16,10 @@ class ReviewFactory extends Factory
     public function definition()
     {
         return [
-            'product_id' => function(){
-                return Product::all()->random();
-            },
+            'product_id' => Product::inRandomOrder()->value('id'),
             'review' => $this->faker->paragraph(),
             'star' => $this->faker->numberBetween(0,5),
-            'created_by' => function(){
-                return User::all()->random();
-            }
+            'created_by' => User::inRandomOrder()->value('id')
         ];
     }
 }

@@ -17,9 +17,7 @@ class CategoryFactory extends Factory
         return [
             'category_name' => $this->faker->word(),
             'detail' => $this->faker->paragraph(),
-            'created_by' => function(){
-                return User::all()->random();
-            }
+            'created_by' => User::inRandomOrder()->value('id')
         ];
     }
 }

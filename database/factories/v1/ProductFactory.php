@@ -18,15 +18,11 @@ class ProductFactory extends Factory
         return [
             'product_name' => $this->faker->word(),
             'detail' => $this->faker->paragraph(),
-            'category_id' => function(){
-                return Category::all()->random();
-            },
+            'category_id' => Category::inRandomOrder()->value('id'),
             'price' => $this->faker->numberBetween(100,1000),
             'stock' => $this->faker->randomDigit(),
             'discount' => $this->faker->numberBetween(2,30),
-            'created_by' => function(){
-                return User::all()->random();
-            }
+            'created_by' => User::inRandomOrder()->value('id')
         ];
     }
 }
