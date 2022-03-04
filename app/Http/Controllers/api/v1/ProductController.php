@@ -7,13 +7,13 @@ use App\Http\Resources\v1\ProductResource;
 use App\Models\v1\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends BaseController
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index','show');
+        $this->middleware('auth:sanctum')->except('index');
+        $this->authorizeResource(Product::class, 'product');
     }
 
     public function index(Product $product, Request $request)
@@ -44,7 +44,6 @@ class ProductController extends BaseController
     
     public function update(ProductRequest $request, Product $product)
     {   
-        $this->userAuthorize($product); 
 
         $product->update($request->all());
 
@@ -58,13 +57,5 @@ class ProductController extends BaseController
     {
         $product->delete();
         return response(null,Response::HTTP_NO_CONTENT);
-    }
-
-    public function userAuthorize($product)
-    {
-        if(Auth::user()->id != $product->created_by){
-            //throw your exception text here;
-            
-        }
     }
 }

@@ -12,6 +12,8 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes, HasRoles;
 
+    protected $guarded = [];
+
     /**
      * The attributes that are mass assignable.
      *

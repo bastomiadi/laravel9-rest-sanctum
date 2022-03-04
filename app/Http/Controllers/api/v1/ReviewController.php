@@ -6,13 +6,13 @@ use App\Http\Requests\v1\ReviewRequest;
 use App\Http\Resources\v1\ReviewResource;
 use App\Models\v1\Review;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends BaseController
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index','show');
+        $this->middleware('auth:sanctum')->except('index');
+        $this->authorizeResource(Review::class, 'review');
     }
 
     public function index(Review $review)
@@ -38,7 +38,6 @@ class ReviewController extends BaseController
     
     public function update(ReviewRequest $request, Review $review)
     {   
-        $this->userAuthorize($review); 
 
         $review->update($request->all());
 
@@ -54,11 +53,4 @@ class ReviewController extends BaseController
         return response(null,Response::HTTP_NO_CONTENT);
     }
 
-    public function userAuthorize($review)
-    {
-        if(Auth::user()->id != $review->created_by){
-            //throw your exception text here;
-            
-        }
-    }
 }

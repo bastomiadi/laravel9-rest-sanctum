@@ -19,36 +19,63 @@ class SpatieSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions Category
-        Permission::create(['name' => 'edit category']);
-        Permission::create(['name' => 'delete category']);
-        Permission::create(['name' => 'update category']);
-        Permission::create(['name' => 'add category']);
+        Permission::create(['name' => 'view list category']);
+        Permission::create(['name' => 'create category']);
+        Permission::create(['name' => 'update own category']);
+        Permission::create(['name' => 'update any category']);
+        Permission::create(['name' => 'delete own category']);
+        Permission::create(['name' => 'delete any category']);
 
         // create permissions Product
-        Permission::create(['name' => 'edit product']);
-        Permission::create(['name' => 'delete product']);
-        Permission::create(['name' => 'update product']);
-        Permission::create(['name' => 'add product']);
+        Permission::create(['name' => 'view list product']);
+        Permission::create(['name' => 'create product']);
+        Permission::create(['name' => 'update own product']);
+        Permission::create(['name' => 'update any product']);
+        Permission::create(['name' => 'delete own product']);
+        Permission::create(['name' => 'delete any product']);
 
         // create permissions Review
-        Permission::create(['name' => 'edit review']);
-        Permission::create(['name' => 'delete review']);
-        Permission::create(['name' => 'update review']);
-        Permission::create(['name' => 'add review']);
+        Permission::create(['name' => 'view list review']);
+        Permission::create(['name' => 'create review']);
+        Permission::create(['name' => 'update own review']);
+        Permission::create(['name' => 'update any review']);
+        Permission::create(['name' => 'delete own review']);
+        Permission::create(['name' => 'delete any review']);
 
         // create roles and assign created permissions
 
         // or may be done by chaining
         $role = Role::create(['name' => 'user'])
             ->givePermissionTo([
-                'add review', 
-                'edit review', 
-                'delete review', 
-                'update review'
+                'view list category',
+                'create category', 
+                'update own category', 
+                'delete own category', 
+                'view list product',
+                'create product', 
+                'update own product', 
+                'delete own product', 
+                'view list review',
+                'create review', 
+                'update own review', 
+                'delete own review', 
             ]);
 
-        $role = Role::create(['name' => 'superadmin']);
-        $role->givePermissionTo(Permission::all());
+        $role = Role::create(['name' => 'superadmin'])
+            ->givePermissionTo([
+                'create category', 
+                'update any category', 
+                'delete any category', 
+                'create product', 
+                'update any product', 
+                'delete any product', 
+                'create review', 
+                'update any review', 
+                'delete any review', 
+            ]);
+
+        //$role = Role::create(['name' => 'superadmin']);
+        //$role->givePermissionTo(Permission::all());
 
     }
 }

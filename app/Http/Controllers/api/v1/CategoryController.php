@@ -7,13 +7,13 @@ use App\Http\Resources\v1\CategoryResource;
 use App\Models\v1\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends BaseController
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index','show');
+        $this->middleware(['auth:sanctum'])->except('index');
+        $this->authorizeResource(Category::class, 'category');
     }
 
     public function index(Category $category, Request $request)
@@ -45,7 +45,6 @@ class CategoryController extends BaseController
     
     public function update(CategoryRequest $request, Category $category)
     {   
-        $this->userAuthorize($category); 
 
         $category->update($request->all());
 
@@ -61,11 +60,4 @@ class CategoryController extends BaseController
         return response(null,Response::HTTP_NO_CONTENT);
     }
 
-    public function userAuthorize($category)
-    {
-        if(Auth::user()->id != $category->created_by){
-            //throw your exception text here;
-            
-        }
-    }
 }
