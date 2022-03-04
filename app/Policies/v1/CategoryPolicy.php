@@ -16,11 +16,10 @@ class CategoryPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(?User $user)
     {
-        if ($user->can('view list category')) {
-            return true;
-        }
+        return optional(true);
+        //return optional($user->can('view list category') === true);
     }
 
     /**
