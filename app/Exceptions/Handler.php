@@ -44,5 +44,13 @@ class Handler extends ExceptionHandler
                 'responseStatus'  => 403,
             ]);
         });
+
+        $this->renderable(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, $request) {
+            return response()->json([
+                'responseMessage' => 'Not Found',
+                'responseStatus'  => 404,
+            ]);
+        });
+
     }
 }
